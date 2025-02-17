@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مواقيت الصلاة والمسبحة</title>
+    <style>
+        /* إزالة الحدود لجميع العناصر */
+        * {
+            border: none;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ضبط الصفحة لتكون ثابتة */
+        body, html {    
+            width: 100vw;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #f4f4f9;
+            overflow: hidden; /* إزالة التمرير */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* مواقيت الصلاة */
+        iframe {
+            width: 100vw;  /* عرض الإطار بالكامل */
+            height: 60vh;  /* تخصيص 60% من ارتفاع الشاشة لمواقيت الصلاة */
+            border: none;
+            position: absolute; /* وضع الإطار بشكل ثابت في الأعلى */
+            top: 0;
+            left: 0;
+        }
+
+        /* قسم المسبحة */
+        .tasbeeh-container {
+            position: absolute;
+            top: 50vh; /* وضع المسبحة أسفل مواقيت الصلاة مباشرة */
+            width: 100vw;
+            height: 60vh; /* تخصيص 40% من ارتفاع الشاشة للمسبحة */
+            padding: 10px;
+            background: linear-gradient(135deg, #673ab7, #3f51b5);
+            color: white;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* عدد التسبيحات */
+        .tasbeeh-count {
+            font-size: 40px;
+            font-weight: bold;
+            margin: 10px 0;
+            text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* أزرار التحكم */
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .tasbeeh-btn {
+            background: #4caf50;
+        }
+
+        .tasbeeh-btn:hover {
+            background: #388e3c;
+        }
+
+        .reset-btn {
+            background: #f44336;
+        }
+
+        .reset-btn:hover {
+            background: #c62828;
+        }
+
+        .decrease-btn {
+            background: #ff9800;
+        }
+
+        .decrease-btn:hover {
+            background: #f57c00;
+        }
+
+        /* زر تلجرام */
+        .telegram-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #0088cc;
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+
+        .telegram-btn:hover {
+            background-color: #0077b5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- مواقيت الصلاة -->
+    <iframe id="iframe3" 
+            src="https://timesprayer.today/widget_frame.php?frame=3&amp;id=95&amp;theme=w3-deep-purple&amp;sound=true">
+    </iframe>
+
+    <!-- المسبحة الرقمية -->
+    <div class="tasbeeh-container">
+        <h2>🕌 المسبحة الرقمية</h2>
+        <div class="tasbeeh-count" id="tasbeehCount">0</div>
+        <div class="buttons">
+            <button class="tasbeeh-btn" onclick="increaseTasbeeh()">📿 تسبيح</button>
+            <button class="reset-btn" onclick="resetTasbeeh()">🔄 تصفير</button>
+            <button class="decrease-btn" onclick="decreaseTasbeeh()">➖ تقليل</button>
+        </div>
+        <!-- زر تلجرام للتواصل مع المطور -->
+        <a class="telegram-btn" href="https://t.me/YourTelegramUsername" target="_blank">مراسلة عبر التلجرام</a>
+    </div>
+
+    <script>
+        // تحميل عدد التسبيحات المحفوظ من localStorage
+        let tasbeehCount = parseInt(localStorage.getItem('tasbeehCount')) || 0;
+        document.getElementById("tasbeehCount").innerText = tasbeehCount;
+
+        function increaseTasbeeh() {
+            tasbeehCount++;
+            document.getElementById("tasbeehCount").innerText = tasbeehCount;
+            localStorage.setItem('tasbeehCount', tasbeehCount); // حفظ العدد
+        }
+
+        function resetTasbeeh() {
+            tasbeehCount = 0;
+            document.getElementById("tasbeehCount").innerText = tasbeehCount;
+            localStorage.setItem('tasbeehCount', tasbeehCount); // حفظ العدد
+        }
+
+        function decreaseTasbeeh() {
+            if (tasbeehCount > 0) {
+                tasbeehCount--;
+                document.getElementById("tasbeehCount").innerText = tasbeehCount;
+                localStorage.setItem('tasbeehCount', tasbeehCount); // حفظ العدد
+            }
+        }
+    </script>
+
+</body>
+</html>
